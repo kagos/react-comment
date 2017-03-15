@@ -1,0 +1,74 @@
+.comment {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 10px 20px;
+  position: relative;
+  text-align: left;
+  width: 90%;
+}
+
+.comment .avatar {
+  display: inline-block;
+  height: 120px;
+  width: 120px;
+  vertical-align: top;
+}
+
+.comment .comment-body {
+  display: inline-block;
+  padding: 0 10px;
+  vertical-align: top;
+}
+
+.comment .comment-body .date,
+.comment .comment-body .author {
+  display: inline;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 28px;
+}
+
+.comment .comment-body .date::before {
+  content: " @ ";
+}
+
+.header h1 {
+  margin: 0;
+  padding: 30px 5% 0 0;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.header h2 {
+  margin: 0;
+}
+
+.submit-comment-box {
+  margin: 10px auto;
+  text-align: left;
+  width: 90%;
+}
+
+.submit-comment-box h3 {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin: 0;
+  padding: 5px;
+}
+
+.submit-comment-box textarea {
+  border-top: 0;
+  box-sizing: border-box;
+  height: 120px;
+  max-height: 120px;
+  max-width: 100%;
+  width: 100%;
+}
+
+.submit-comment-box button {
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 700;
+  min-width: 150px;
+  padding: 5px 10px;
+}

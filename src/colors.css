@@ -1,0 +1,39 @@
+.alert {
+  background: #D33F49;
+}
+
+.alert-font {
+  color: #D33F49;
+}
+
+.comment-border {
+  border: 2px #8E9AAF solid;
+  border-radius: 5px;
+}
+.dark {
+  background: #1E1E1E;
+}
+
+.dark-font {
+  color: #1E1E1E;
+}
+
+.light {
+  background: #FBF5F3;
+}
+
+.light-font {
+  color: #FBF5F3;
+}
+
+.primary {
+  background: #1E87BC;
+}
+
+.primary-border {
+  border: 2px #1E87BC solid;
+}
+
+.secondary {
+  background: #D33F49;
+}
