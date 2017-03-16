@@ -6,18 +6,16 @@ class Comment extends Component {
   render() {
     return(
       <div className="comment comment-border">
-        <img className="avatar"
-         src={this.props.content.author.avatarUrl}
-         alt={this.props.content.author.name} />
+        <img className="avatar" src={this.props.content.avatarUrl} />
         <div className="comment-body">
           <div className="author">
-            {this.props.content.author.name}
+            {this.props.content.nickname}
           </div>
           <div className="date">
-            {this.formatDate(this.props.content.date)}
+            {this.props.content.timestamp}
           </div>
           <div className="text">
-            {this.props.content.text}
+            {this.props.content.message}
           </div>
         </div>
       </div>

@@ -1,37 +1,54 @@
 import React, { Component } from 'react';
+import Rx from 'rx';
+import $ from 'jquery';
 import { Comment } from '../components/Comment';
+import { SubmitCommentBox } from '../components/SubmitCommentBox';
 
 class MessageBoard extends Component {
 
-  getAvatarUrl = () => {
-    // TODO - 3/14/2017 - KA
-    // Remove RandomKitten generator .. maybe
+  componentDidMount() {
+      const button = document.getElementById('comment-submit-button');
+      const textField = document.getElementById('submit-comment-input');
+      const nickname = this.props.nickname;
+      const avatarUrl = this.props.avatarUrl;
+      const clickStream = Rx.Observable.fromEvent(button, 'click').map(e => true);
+      const textEnteredStream = Rx.Observable.fromEvent(textField, 'keyup').map(e => e.target.value);
+      const sendMessageStream = Rx.Observable.merge(clickStream);
+      const mergedStream = textEnteredStream.takeUntil(sendMessageStream);
 
-    const randomKittenUrlArr = [
-      'http://s3-us-west-1.amazonaws.com/witty-avatars/default-avatar-1-l.jpg',
-      'http://s3-us-west-1.amazonaws.com/witty-avatars/default-avatar-2-l.jpg',
-      'http://s3-us-west-1.amazonaws.com/witty-avatars/default-avatar-3-l.jpg',
-      'http://s3-us-west-1.amazonaws.com/witty-avatars/default-avatar-4-l.jpg',
-      'http://s3-us-west-1.amazonaws.com/witty-avatars/default-avatar-5-l.jpg'];
+      let text = '';
+      let onNext = t => { text = t }
+      let onError = e => {}
+      let onComplete = () => {
+        // TODO - 3/15/2017 - KA
+        // Remove static URL (http://localhost:3001/comment)
 
-    const rand = Math.ceil(Math.random() * randomKittenUrlArr.length);
+        $.post('http://localhost:3001/comment',
+          {
+            'message': text,
+            'nickname': nickname,
+            'timestamp': Date.now(),
+            'avatarUrl': avatarUrl
+          }
+        );
 
-    return randomKittenUrlArr[rand];
-  }
+        textField.value = '';
+        textField.focus();
+        mergedStream.subscribe(onNext, onError, onComplete);
+      }
 
-  comment = {
-    date: new Date(),
-    text: 'Hooray for cats!',
-    author: {
-      name: 'XX_mr_orange_pants_XX',
-      avatarUrl: this.getAvatarUrl()
-    }
+      mergedStream.subscribe(onNext, onError, onComplete);
   }
 
   render() {
     return (
       <div className="message-board-container">
-        <Comment content={this.comment} />
+        {
+          this.props.messages.map((message, index) =>
+            <Comment key={index} content={message} />
+          )
+        }
+        <SubmitCommentBox />
       </div>
     );
   }
